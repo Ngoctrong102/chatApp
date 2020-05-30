@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.AppViewController">
+   <children>
+      <Pane prefHeight="26.0" prefWidth="1200.0" style="-fx-background-color: #202225;" />
+      <Pane layoutX="88.0" layoutY="729.0" prefHeight="76.0" prefWidth="272.0" style="-fx-background-color: #282A2E;">
+         <children>
+            <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="77.0" prefWidth="272.0">
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/avartar.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="username" prefHeight="38.0" prefWidth="154.0" text="User1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="38.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/btnsignout.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children></Pane>
+      <Text fill="WHITE" layoutX="16.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FriendList" wrappingWidth="127.87060546875">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Pane layoutX="88.0" layoutY="26.0" prefHeight="703.0" prefWidth="272.0" style="-fx-background-color: #2F3136;">
+         <children>
+            <Group fx:id="friendList" layoutX="-5.0" layoutY="62.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" layoutX="2.0" prefHeight="68.0" prefWidth="279.0" style="-fx-background-color: #393C43;">
+                     <children>
+                        <ImageView fitHeight="63.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/avartar.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="38.0" prefWidth="172.0" text="User2" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/btnonline.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutY="68.0" prefHeight="68.0" prefWidth="279.0">
+                     <children>
+                        <ImageView fitHeight="69.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/avartar.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="38.0" prefWidth="169.0" text="User3" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/btnonline.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="2.0" layoutY="136.0" prefHeight="68.0" prefWidth="272.0">
+                     <children>
+                        <ImageView fitHeight="63.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/avartar.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="38.0" prefWidth="156.0" text="User4" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </Group>
+            <JFXTextField layoutX="16.0" layoutY="14.0" prefHeight="31.0" prefWidth="178.0" style="-fx-background-color: #202225;" text="Add Friend Here" />
+            <JFXButton layoutX="204.0" layoutY="14.0" prefHeight="31.0" prefWidth="63.0" style="-fx-background-color: #43B581;" text="Add" />
+         </children>
+      </Pane>
+<!--      <Button fx:id="btnsend" contentDisplay="GRAPHIC_ONLY" layoutX="1094.0" layoutY="714.0" mnemonicParsing="false" onAction="#Sendmsg" prefHeight="62.0" prefWidth="71.0" style="-fx-background-color: #36393F;" text="send" />-->
+      <Pane layoutY="26.0" prefHeight="779.0" prefWidth="88.0" style="-fx-background-color: #202225;">
+         <children>
+            <Line endX="-50.0" endY="-1.52587890625E-5" layoutX="106.0" layoutY="76.0" startX="-75.0" startY="-1.52587890625E-5" stroke="#dfd2d2" />
+            <VBox layoutY="77.0" prefHeight="487.0" prefWidth="88.0" style="-fx-background-color: #202225;">
+               <children>
+                  <JFXButton contentDisplay="GRAPHIC_ONLY">
+                     <graphic>
+                        <ImageView fx:id="addgroupicon" fitHeight="66.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/btnaddgroup.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="roomsIcon" contentDisplay="GRAPHIC_ONLY" onAction="#getRooms" prefHeight="77.0" prefWidth="88.0" text="Button">
+                     <graphic>
+                        <ImageView fitHeight="66.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/btngroup.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="friendsIcon" contentDisplay="GRAPHIC_ONLY" onAction="#getFriends" prefHeight="77.0" prefWidth="88.0" text="Button">
+                     <graphic>
+                        <ImageView fitHeight="66.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/avartar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <JFXButton fx:id="btnhomepage" contentDisplay="GRAPHIC_ONLY" onAction="#handlebutton" text="Button">
+               <graphic>
+                  <ImageView fx:id="homepageicon" fitHeight="66.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/btnhomepage.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children></Pane>
+      <BorderPane layoutX="360.0" layoutY="26.0" prefHeight="779.0" prefWidth="840.0">
+         <top>
+            <Pane prefHeight="60.0" prefWidth="840.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Line endX="738.0" endY="1.52587890625E-5" layoutX="101.0" layoutY="59.0" startX="-373.0" startY="1.52587890625E-5" />
+                  <Label layoutX="40.0" layoutY="8.0" prefHeight="26.0" prefWidth="123.0" text="User2" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </top>
+         <center>
+            <Pane prefHeight="702.0" prefWidth="840.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox fx:id="msgpane" layoutX="34.0" layoutY="635.0" prefHeight="38.0" prefWidth="717.0" style="-fx-background-color: #FFFFFF;">
+                     <children>
+                        <JFXButton contentDisplay="GRAPHIC_ONLY" prefHeight="65.0" prefWidth="62.0" text="Button">
+                           <graphic>
+                              <ImageView fx:id="addfileicon" fitHeight="118.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/btnaddfile.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXTextArea fx:id="msg" prefHeight="15.0" prefWidth="654.0" promptText="Message" unFocusColor="#40444b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </JFXTextArea>
+                     </children>
+                  </HBox>
+                  <JFXButton fx:id="btnSend" contentDisplay="GRAPHIC_ONLY" layoutX="751.0" layoutY="629.0" onAction="#Sendmsg" text="Button">
+                     <graphic>
+                        <ImageView fx:id="sendicon" fitHeight="55.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/btnsend.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <Group fx:id="messGroup" layoutX="32.0" layoutY="27.0">
+                     <children>
+                        <HBox prefHeight="76.0" prefWidth="773.0">
+                           <children>
+                              <ImageView fitHeight="63.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/avartar.png" />
+                                 </image>
+                              </ImageView>
+                              <VBox alignment="TOP_CENTER" prefHeight="82.0" prefWidth="713.0">
+                                 <children>
+                                    <Label prefHeight="38.0" prefWidth="713.0" text="User2" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="59.0" prefWidth="716.0" text="Hello, my name is User2" textFill="WHITE">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox layoutY="76.0" prefHeight="76.0" prefWidth="773.0">
+                           <children>
+                              <ImageView fitHeight="63.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/avartar.png" />
+                                 </image>
+                              </ImageView>
+                              <VBox alignment="TOP_CENTER" prefHeight="82.0" prefWidth="713.0">
+                                 <children>
+                                    <Label prefHeight="38.0" prefWidth="713.0" text="User1" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="59.0" prefWidth="716.0" text="Hello, my name is User1" textFill="WHITE">
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </Group>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
