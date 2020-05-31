@@ -2,10 +2,7 @@ package client;
 
 import client.controller.AppViewController;
 import client.controller.LoginViewController;
-import data.serialize.Message;
-import data.serialize.ResponseFriend;
-import data.serialize.ResponseMess;
-import data.serialize.User;
+import data.serialize.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -14,10 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.net.Socket;
 
 public class MainClient extends Application {
@@ -34,7 +28,6 @@ public class MainClient extends Application {
     public void start(Stage primaryStage) throws Exception {
         MainClient.primaryStage = primaryStage;
         MainClient.cli = new ClientSocket();
-
         wait = new Thread( new Runnable() {
             @Override
             public void run() {
@@ -79,6 +72,34 @@ public class MainClient extends Application {
         }
         if (res instanceof Message){
             avc.renderNewMess((Message)res);
+        }
+        if (res instanceof ResponseNewRoom){
+            ResponseNewRoom newRoom = (ResponseNewRoom)res;
+            user.getRooms().add(newRoom.roomInfo);
+            avc.renderRoom();
+            avc.changeRoom(newRoom.roomInfo.roomID,newRoom.roomInfo.roomName);
+        }
+        if (res instanceof ResponseListRoom){
+            avc.renderRoomToJoin((ResponseListRoom)res);
+        }
+        if (res instanceof FileMess){
+            saveFile((FileMess)res);
+            Message mess = new Message();
+            mess.roomID = ((FileMess) res).roomID;
+            mess.from = ((FileMess) res).from;
+            mess.content = ((FileMess) res).fileName;
+            avc.renderNewMess(mess);
+        }
+    }
+
+    private static void saveFile(FileMess res) {
+        File fileReceive = new File(user.getUsername()+ File.separator + res.fileName);
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(fileReceive));
+            bos.write(res.fileData);
+            bos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

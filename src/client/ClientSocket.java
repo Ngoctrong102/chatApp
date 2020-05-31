@@ -54,4 +54,36 @@ public class ClientSocket {
     public void sendMess(RequestSendMess requestSendMess) throws IOException {
         objectOutputStream.writeObject(requestSendMess);
     }
+
+    public void creatRoom(RequestCreateNewRoom requestCreateNewRoom) {
+        try {
+            objectOutputStream.writeObject(requestCreateNewRoom);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void requestRoomToJoin() {
+        try {
+            objectOutputStream.writeObject(new RequestListRoomToJoin());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void requestJoin(int roomID) {
+        try {
+            objectOutputStream.writeObject(new RequestJoinRoom(roomID));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendFile(FileMess fileMess) {
+        try {
+            objectOutputStream.writeObject(fileMess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

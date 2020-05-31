@@ -1,7 +1,5 @@
 package data.serialize;
 
-import server.ChatRoom;
-
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,14 +10,13 @@ public class User implements Serializable {
     private String username;
     private String password;
     private ArrayList<Integer> friendIDs = new ArrayList<Integer>();
-    private ArrayList<Integer> roomIDs = new ArrayList<Integer>();
+    private ArrayList<RoomInfo> rooms = new ArrayList<RoomInfo>();
 
     public User(ResultSet resultSet) throws SQLException {
         id = resultSet.getInt("id");
         username = resultSet.getString("username");
         password = resultSet.getString("password");
         for(String friendID: resultSet.getString("friendIDs").split(",")){ friendIDs.add(Integer.parseInt(friendID)); }
-        for(String roomID: resultSet.getString("roomIDs").split(",")){ roomIDs.add(Integer.parseInt(roomID)); }
     }
 
     public String getPassword() {
@@ -34,8 +31,8 @@ public class User implements Serializable {
         return friendIDs;
     }
 
-    public ArrayList<Integer> getRoomIDs() {
-        return roomIDs;
+    public ArrayList<RoomInfo> getRooms() {
+        return rooms;
     }
 
     public int getId() {

@@ -1,5 +1,6 @@
 package server;
 
+import data.serialize.FileMess;
 import data.serialize.Message;
 
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class ChatRoom {
             String stm = "INSERT INTO Messages (roomID,fromUser,content) VALUES ("+ Integer.toString(message.roomID) +","+ Integer.toString(message.from) +",N'"+ message.content +"')";
             System.out.println(stm);
             ps = connection.prepareStatement(stm);
-            ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -56,5 +57,21 @@ public class ChatRoom {
     public boolean turnOff(ServerWorker worker) {
 //        if (listUserOnl k cos ai -> tắt ( ){ xóa user ra khỏi listOnl }-> return true
         return true;
+    }
+
+    public void sendFile(FileMess request) {
+        PreparedStatement ps = null;
+        request.fileName = request.fileName.replaceAll("\'|\"","");
+        try {
+            String stm = "INSERT INTO Messages (roomID,fromUser,content) VALUES ("+ Integer.toString(request.roomID) +","+ Integer.toString(request.from) +",N'"+ request.fileName +"<FILE>')";
+            System.out.println(stm);
+            ps = connection.prepareStatement(stm);
+            ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        for (ServerWorker worker: listUserOnl){
+            worker.sendF(request);
+        }
     }
 }

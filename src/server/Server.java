@@ -59,4 +59,14 @@ public class Server extends Thread{
             }
         }
     }
+
+    public void addUserToRoom(ServerWorker worker, int roomID) {
+        for (ChatRoom chatRoom: roomList){
+            if (chatRoom.getID() == roomID){
+                chatRoom.addUserOnl(worker);
+                return;
+            }
+        }
+        worker.startRoom(roomID);
+    }
 }
