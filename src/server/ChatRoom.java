@@ -53,10 +53,10 @@ public class ChatRoom {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
     public boolean turnOff(ServerWorker worker) {
+
 //        if (listUserOnl k cos ai -> tắt ( ){ xóa user ra khỏi listOnl }-> return true
         return true;
     }

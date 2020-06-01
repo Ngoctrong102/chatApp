@@ -3,7 +3,6 @@ package server;
 import data.serialize.*;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,40 +42,13 @@ public class ServerWorker extends Thread{
         this.conti = true;
         while (conti){
             Serializable request = (Serializable)inputStream.readObject();
-            if (request instanceof RequestLogout){
-                handleLogout();
-            }
             if (request instanceof DataLogin){
                 handleLogin((DataLogin)request);
             }
-            if (request instanceof RequestFriend){
-                returnListFriend((RequestFriend)request);
-            }
-            if (request instanceof RequestMess){
-                returnMess((RequestMess)request);
-            }
-            if (request instanceof RequestSendMess){
-                sendMess((RequestSendMess)request);
-            }
             if (request instanceof Disconnect){
-                handleLogout();
                 disconnect((Disconnect)request);
             }
-            if (request instanceof RequestCreateNewRoom){
-                recreateNewRoom((RequestCreateNewRoom)request);
-            }
-            if (request instanceof RequestListRoomToJoin){
-                returnListRoomToJoin();
-            }
-            if (request instanceof RequestJoinRoom){
-                handleJoin(((RequestJoinRoom) request).roomID);
-            }
-            if (request instanceof FileMess){
-                sendFile((FileMess)request);
-            }
-            if (request instanceof RequestMemOf){
-                returnListUser(((RequestMemOf) request).roomID);
-            }
+
         }
     }
 
@@ -251,12 +223,12 @@ public class ServerWorker extends Thread{
 
     }
 
-    private boolean handleLogin(DataLogin req) throws SQLException, IOException {
+    private void handleLogin(DataLogin req) throws SQLException, IOException, ClassNotFoundException {
         PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM Users WHERE username = ?");
         ps.setString(1, req.getUsername());
         System.out.println(req.getUsername() + " " + req.getPassword());
         ResultSet resultSet = ps.executeQuery();
-        if (resultSet.next()==false) return false;
+        if (resultSet.next()==false) return;
         if (resultSet.getString("password").equals(req.getPassword())){
             user = new User(resultSet);
             if ( resultSet.getString("roomIDs") != null) {
@@ -273,7 +245,41 @@ public class ServerWorker extends Thread{
             }
             outputStream.writeObject(user);
         }
-        return true;
+        this.conti = true;
+        while (conti){
+            Serializable request = (Serializable)inputStream.readObject();
+            if (request instanceof RequestLogout){
+                handleLogout();
+            }
+            if (request instanceof RequestFriend){
+                returnListFriend((RequestFriend)request);
+            }
+            if (request instanceof RequestMess){
+                returnMess((RequestMess)request);
+            }
+            if (request instanceof RequestSendMess){
+                sendMess((RequestSendMess)request);
+            }
+            if (request instanceof Disconnect){
+                handleLogout();
+                disconnect((Disconnect)request);
+            }
+            if (request instanceof RequestCreateNewRoom){
+                recreateNewRoom((RequestCreateNewRoom)request);
+            }
+            if (request instanceof RequestListRoomToJoin){
+                returnListRoomToJoin();
+            }
+            if (request instanceof RequestJoinRoom){
+                handleJoin(((RequestJoinRoom) request).roomID);
+            }
+            if (request instanceof FileMess){
+                sendFile((FileMess)request);
+            }
+            if (request instanceof RequestMemOf){
+                returnListUser(((RequestMemOf) request).roomID);
+            }
+        }
     }
 
     private void startAllRoom() {

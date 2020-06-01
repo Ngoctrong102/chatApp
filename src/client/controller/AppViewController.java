@@ -228,7 +228,7 @@ public class AppViewController {
             HBox hb = new HBox();
             hb.setLayoutY(nextPosMess);
             hb.setPrefHeight(76);
-            hb.setPrefWidth(773);
+            hb.setPrefWidth(814);
             File file = new File("src/client/image/avartar.png");
             Image image = new Image(file.toURI().toString());
             ImageView avt= new ImageView(image);
@@ -247,6 +247,7 @@ public class AppViewController {
             content.setFont(Font.font(19));
             VBox vb = new VBox();
             vb.setAlignment(Pos.valueOf("TOP_CENTER"));
+            vb.setPrefWidth(730);
             vb.setPrefHeight(82);
             vb.getChildren().addAll(username,content);
             if (mess.from == user.getId()){
@@ -303,7 +304,7 @@ public class AppViewController {
             HBox hb = new HBox();
             hb.setLayoutY(nextPosMess);
             hb.setPrefHeight(76);
-            hb.setPrefWidth(773);
+            hb.setPrefWidth(814);
             File file = new File("src/client/image/avartar.png");
             Image image = new Image(file.toURI().toString());
             ImageView avt = new ImageView(image);
@@ -322,6 +323,7 @@ public class AppViewController {
             content.setFont(Font.font(19));
             VBox vb = new VBox();
             vb.setAlignment(Pos.valueOf("TOP_CENTER"));
+            vb.setPrefWidth(730);
             vb.setPrefHeight(82);
             vb.getChildren().addAll(username, content);
             if (mess.from == user.getId()) {
@@ -424,7 +426,6 @@ public class AppViewController {
     void Logout(ActionEvent event) throws IOException {
         RequestLogout requestlogout = new RequestLogout(this.user);
         try {
-            System.out.println("Logout");
             client.objectOutputStream.writeObject(requestlogout);
         } catch (IOException e) {
             e.printStackTrace();
