@@ -29,6 +29,8 @@ public class ChatRoom {
         listUserOnl.add(serverWorker);
     }
 
+    public void removeUserOff(ServerWorker serverWorker) {listUserOnl.remove(serverWorker);}
+
     public int getID() {
         return this.roomID;
     }

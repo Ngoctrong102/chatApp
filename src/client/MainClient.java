@@ -59,6 +59,7 @@ public class MainClient extends Application {
         if (res instanceof User){
             try {
                 user = (User)res;
+                System.out.println("Hello");
                 showAppView();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -118,7 +119,7 @@ public class MainClient extends Application {
         primaryStage.setScene(new Scene(root));
     }
 
-    private void showLoginView() throws IOException {
+    public static void showLoginView() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MainClient.class.getResource("view/LoginView.fxml"));
         Parent root = loader.load();
@@ -130,8 +131,8 @@ public class MainClient extends Application {
     }
 
 
-    private void logout(){
-
+    private void logout() throws IOException {
+        showLoginView();
     }
 
     @Override

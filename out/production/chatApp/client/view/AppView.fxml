@@ -20,20 +20,11 @@
    <children>
       <Pane prefHeight="26.0" prefWidth="1200.0" style="-fx-background-color: #202225;" />
 <!--      <Button fx:id="btnsend" contentDisplay="GRAPHIC_ONLY" layoutX="1094.0" layoutY="714.0" mnemonicParsing="false" onAction="#Sendmsg" prefHeight="62.0" prefWidth="71.0" style="-fx-background-color: #36393F;" text="send" />-->
-      <Pane layoutY="26.0" prefHeight="779.0" prefWidth="88.0" style="-fx-background-color: #202225;">
+      <Pane layoutY="26.0" prefHeight="780.0" prefWidth="88.0" style="-fx-background-color: #202225;">
          <children>
             <Line endX="-50.0" endY="-1.52587890625E-5" layoutX="106.0" layoutY="76.0" startX="-75.0" startY="-1.52587890625E-5" stroke="#dfd2d2" />
-            <VBox layoutY="77.0" prefHeight="487.0" prefWidth="88.0" style="-fx-background-color: #202225;">
+            <VBox layoutY="77.0" style="-fx-background-color: #202225;">
                <children>
-                  <JFXButton fx:id="btnJoin" contentDisplay="GRAPHIC_ONLY" onAction="#listRoomToJoin">
-                     <graphic>
-                        <ImageView fx:id="addgroupicon" fitHeight="66.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/btnaddgroup.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
                   <JFXButton fx:id="roomsIcon" contentDisplay="GRAPHIC_ONLY" onAction="#getRooms" prefHeight="77.0" prefWidth="88.0" text="Button">
                      <graphic>
                         <ImageView fitHeight="66.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
@@ -54,7 +45,7 @@
 <!--                  </JFXButton>-->
                </children>
             </VBox>
-            <JFXButton fx:id="btnhomepage" contentDisplay="GRAPHIC_ONLY" onAction="#handlebutton" text="Button">
+            <JFXButton fx:id="btnJoin" contentDisplay="GRAPHIC_ONLY" onAction="#listRoomToJoin" text="Button">
                <graphic>
                   <ImageView fx:id="homepageicon" fitHeight="66.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -64,11 +55,11 @@
                </graphic>
             </JFXButton>
          </children></Pane>
-      <Pane layoutX="82.0" layoutY="729.0" prefHeight="76.0" prefWidth="283.0" style="-fx-background-color: #282A2E;">
+      <Pane layoutX="88.0" layoutY="730.0" prefHeight="76.0" prefWidth="285.0" style="-fx-background-color: #282A2E;">
          <children>
-            <HBox alignment="CENTER_LEFT" layoutX="1.0" layoutY="-1.0" prefHeight="80.0" prefWidth="283.0" style="-fx-border-color: white;">
+            <HBox alignment="CENTER_LEFT" layoutY="-1.0" prefHeight="79.0" prefWidth="285.0">
                <children>
-                  <ImageView fitHeight="78.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="78.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/avartar.png" />
                      </image>
@@ -78,40 +69,40 @@
                         <Font name="System Bold" size="22.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="38.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/btnsignout.png" />
-                     </image>
-                  </ImageView>
+                  <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#Logout" prefHeight="36.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/btnsignout.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                </children>
             </HBox>
          </children></Pane>
-      <BorderPane layoutX="360.0" layoutY="26.0" prefHeight="779.0" prefWidth="840.0">
+      <BorderPane fx:id="chatframe" layoutX="366.0" layoutY="26.0" prefHeight="779.0" prefWidth="834.0">
          <top>
             <Pane prefHeight="60.0" prefWidth="840.0" BorderPane.alignment="CENTER">
                <children>
-                  <Line endX="738.0" endY="1.52587890625E-5" layoutX="101.0" layoutY="59.0" startX="-373.0" startY="1.52587890625E-5" />
                   <Label fx:id="lblroomName" layoutX="40.0" layoutY="8.0" prefHeight="45.0" prefWidth="696.0" text="User2" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="30.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="btnMem" contentDisplay="GRAPHIC_ONLY" layoutX="754.0" layoutY="-8.0" onAction="#viewListMem" prefHeight="1.0" prefWidth="63.0" text="Button">
-                     <graphic>
-                        <ImageView fitHeight="66.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/member.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
+                  <JFXButton fx:id="btnMem" contentDisplay="GRAPHIC_ONLY" layoutX="754.0" layoutY="-8.0" onAction="#viewListMem" prefHeight="1.0" prefWidth="63.0" text="Button" />
+                  <ImageView fitHeight="53.0" fitWidth="54.0" layoutX="773.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/member.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
          </top>
          <center>
             <Pane prefHeight="702.0" prefWidth="840.0" BorderPane.alignment="CENTER">
                <children>
-                  <ScrollPane fx:id="scrollMess" layoutX="20.0" layoutY="3.0" prefHeight="634.0" prefWidth="806.0" style="-fx-background: #333333;">
+                  <ScrollPane fx:id="scrollMess" layoutX="8.0" layoutY="-1.0" prefHeight="638.0" prefWidth="825.0" style="-fx-background: #36393F; -fx-border-color: #36393F;">
                      <content>
                         <Group fx:id="messGroup">
                            <children>
@@ -171,7 +162,7 @@
          <bottom>
             <Pane prefHeight="77.0" prefWidth="840.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox fx:id="msgpane" layoutX="40.0" layoutY="10.0" prefHeight="53.0" prefWidth="715.0" style="-fx-background-color: #FFFFFF;">
+                  <HBox fx:id="msgpane" layoutX="40.0" layoutY="10.0" prefHeight="57.0" prefWidth="710.0" style="-fx-background-color: #FFFFFF;">
                      <children>
                         <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#chooseFile" prefHeight="65.0" prefWidth="62.0" text="Button">
                            <graphic>
@@ -194,77 +185,27 @@
                         <Image url="@../image/btnsend.png" />
                      </image>
                   </ImageView>
-                  <JFXButton fx:id="btnSend" contentDisplay="GRAPHIC_ONLY" layoutX="747.0" layoutY="-1.0" onAction="#Sendmsg" prefHeight="78.0" prefWidth="94.0" text="Button" />
+                  <JFXButton fx:id="btnSend" contentDisplay="GRAPHIC_ONLY" layoutX="753.0" layoutY="-1.0" onAction="#Sendmsg" prefHeight="78.0" prefWidth="88.0" text="Button" />
                </children>
             </Pane>
          </bottom>
       </BorderPane>
-      <ScrollPane layoutX="83.0" layoutY="88.0" prefHeight="642.0" prefWidth="283.0" style="-fx-background: #333333;">
+      <ScrollPane layoutX="88.0" layoutY="85.0" prefHeight="645.0" prefWidth="285.0" style="-fx-background: #2F3136; -fx-border-color: #2F3136;">
          <content>
-            <Group fx:id="friendList">
-               <children>
-                  <HBox alignment="CENTER_LEFT" layoutX="2.0" prefHeight="68.0" prefWidth="279.0" style="-fx-background-color: #393C43;">
-                     <children>
-                        <ImageView fitHeight="63.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/avartar.png" />
-                           </image>
-                        </ImageView>
-                        <Label prefHeight="38.0" prefWidth="172.0" text="User2" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/btnonline.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutY="68.0" prefHeight="68.0" prefWidth="279.0">
-                     <children>
-                        <ImageView fitHeight="69.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/avartar.png" />
-                           </image>
-                        </ImageView>
-                        <Label prefHeight="38.0" prefWidth="169.0" text="User3" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/btnonline.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="2.0" layoutY="136.0" prefHeight="68.0" prefWidth="272.0">
-                     <children>
-                        <ImageView fitHeight="63.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/avartar.png" />
-                           </image>
-                        </ImageView>
-                        <Label prefHeight="38.0" prefWidth="156.0" text="User4" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
-            </Group>
+            <Group fx:id="friendList" />
          </content>
       </ScrollPane>
-      <HBox layoutX="104.0" layoutY="40.0">
+      <Pane layoutX="88.0" layoutY="26.0" prefHeight="59.0" prefWidth="285.0" style="-fx-background-color: #2F3136;">
          <children>
-            <JFXTextField fx:id="txtroomName" focusColor="WHITE" prefHeight="31.0" prefWidth="178.0" style="-fx-background-color: #ffffff;" text="Add Friend Here" unFocusColor="BLACK" />
-            <Pane prefHeight="31.0" prefWidth="6.0" style="-fx-background-color: #202225;" visible="false" />
-            <JFXButton fx:id="addRoom" onAction="#createRoom" prefHeight="31.0" prefWidth="63.0" style="-fx-background-color: #43B581;" text="Add" />
+            <HBox layoutX="19.0" layoutY="14.0">
+               <children>
+                  <JFXTextField fx:id="txtroomName" prefHeight="31.0" prefWidth="178.0" promptText="Create a group!" style="-fx-background-color: #ffffff;" unFocusColor="#2f3136" />
+                  <Pane prefHeight="31.0" prefWidth="6.0" style="-fx-background-color: #202225;" visible="false" />
+                  <JFXButton fx:id="addRoom" onAction="#createRoom" prefHeight="31.0" prefWidth="63.0" style="-fx-background-color: #43B581;" text="Add" />
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </Pane>
+      <Line endX="1010.5" endY="7.62939453125E-6" layoutX="189.0" layoutY="85.0" startX="-100.99998474121094" startY="7.62939453125E-6" />
    </children>
 </AnchorPane>

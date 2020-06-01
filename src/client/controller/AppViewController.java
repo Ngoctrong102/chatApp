@@ -1,9 +1,11 @@
 package client.controller;
 
 import client.ClientSocket;
+import client.MainClient;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.security.ntlm.Client;
 import data.serialize.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -11,26 +13,22 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 public class AppViewController {
     private ClientSocket client;
@@ -62,6 +60,8 @@ public class AppViewController {
     @FXML
     private HBox hbCur = null;
     @FXML
+    private BorderPane chatframe;
+    @FXML
     public void exitApplication(ActionEvent event) {
         Platform.exit();
     }
@@ -73,7 +73,8 @@ public class AppViewController {
     public void loadView(){
         roomCur = user.getRooms().get(0).roomID;
         loadViewUser();
-        renderRoom();
+        //renderRoom();
+        chatframe.setVisible(false);
     }
 
     public void getFriends(ActionEvent actionEvent) {
@@ -160,8 +161,6 @@ public class AppViewController {
 
     }
 
-
-
     public void renderFriend(ResponseFriend res) {
 //        <HBox alignment="CENTER_LEFT" layoutX="2.0" prefHeight="68.0" prefWidth="279.0" style="-fx-background-color: #393C43;">
 //                     <children>
@@ -222,6 +221,7 @@ public class AppViewController {
     }
 
     public void renderMess(ResponseMess res){
+        chatframe.setVisible(true);
         messGroup.getChildren().clear();
         nextPosMess = 0;
         for (Message mess: res.arrayListMess){
@@ -232,7 +232,9 @@ public class AppViewController {
             File file = new File("src/client/image/avartar.png");
             Image image = new Image(file.toURI().toString());
             ImageView avt= new ImageView(image);
-            Label username = new Label("User " + mess.from);
+            avt.setFitWidth(68);
+            avt.setFitHeight(63);
+            Label username = new Label((String.valueOf(mess.from)));
             username.setTextFill(Paint.valueOf("WHITE"));
             username.setFont(Font.font(22));
             username.setPrefHeight(38);
@@ -263,9 +265,12 @@ public class AppViewController {
             nextPosMess+=68;
             scrollMess.setVvalue(1);
         }
+
+
     }
 
     public void getRooms(ActionEvent actionEvent) {
+        chatframe.setVisible(false);
         friendList.getChildren().clear();
         renderRoom();
     }
@@ -302,7 +307,9 @@ public class AppViewController {
             File file = new File("src/client/image/avartar.png");
             Image image = new Image(file.toURI().toString());
             ImageView avt = new ImageView(image);
-            Label username = new Label("User " + mess.from);
+            avt.setFitWidth(68);
+            avt.setFitHeight(63);
+            Label username = new Label((String.valueOf(mess.from)));
             username.setTextFill(Paint.valueOf("WHITE"));
             username.setFont(Font.font(22));
             username.setPrefHeight(38);
@@ -340,8 +347,8 @@ public class AppViewController {
             }
             renderRoom();
         }
-    }
 
+    }
 
     public void createRoom(ActionEvent actionEvent) {
         client.creatRoom(new RequestCreateNewRoom(txtroomName.getText(),user.getId()));
@@ -352,6 +359,7 @@ public class AppViewController {
 
 
     public void listRoomToJoin(ActionEvent actionEvent) {
+        chatframe.setVisible(false);
         client.requestRoomToJoin();
     }
 
@@ -379,7 +387,7 @@ public class AppViewController {
             username.setPrefWidth(172);
             username.setTextFill(Paint.valueOf("WHITE"));
             username.setFont(Font.font(22));
-            File filejoin = new File("src/client/image/join.png");
+            File filejoin = new File("src/client/image/joingroup.png");
             Image imagejoin = new Image(filejoin.toURI().toString());
             ImageView ivjoin = new ImageView(imagejoin);
             ivjoin.setFitWidth(30);
@@ -410,5 +418,17 @@ public class AppViewController {
     public void viewListMem(ActionEvent actionEvent) {
         System.out.println("view list mem");
         client.memOf(roomCur);
+    }
+
+    @FXML
+    void Logout(ActionEvent event) throws IOException {
+        RequestLogout requestlogout = new RequestLogout(this.user);
+        try {
+            System.out.println("Logout");
+            client.objectOutputStream.writeObject(requestlogout);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MainClient.showLoginView();
     }
 }

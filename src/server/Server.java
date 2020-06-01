@@ -69,4 +69,8 @@ public class Server extends Thread{
         }
         worker.startRoom(roomID);
     }
+
+    public void removeWorker(ServerWorker serverWorker) {
+        workerList.remove(serverWorker);
+    }
 }

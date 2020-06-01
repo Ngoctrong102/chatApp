@@ -1,13 +1,11 @@
 package client;
 
 import data.serialize.*;
-import javafx.concurrent.Task;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ClientSocket {
     public Socket socket;
@@ -89,9 +87,10 @@ public class ClientSocket {
 
     public void memOf(int roomCur) {
         try {
-            objectOutputStream.writeObject(new RequsestMemOf(roomCur));
+            objectOutputStream.writeObject(new RequestMemOf(roomCur));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

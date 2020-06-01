@@ -39,6 +39,10 @@ public class ServerWorker extends Thread{
         this.inputStream = new ObjectInputStream(this.clientSocket.getInputStream());
         while (true){
             Serializable request = (Serializable)inputStream.readObject();
+            if (request instanceof RequestLogout){
+                handleLogout();
+                System.out.println("Logout from " + user.getUsername());
+            }
             if (request instanceof DataLogin){
                 handleLogin((DataLogin)request);
             }
@@ -66,9 +70,16 @@ public class ServerWorker extends Thread{
             if (request instanceof FileMess){
                 sendFile((FileMess)request);
             }
-            if (request instanceof RequsestMemOf){
-                returnListUser(((RequsestMemOf) request).roomID);
+            if (request instanceof RequestMemOf){
+                returnListUser(((RequestMemOf) request).roomID);
             }
+        }
+    }
+
+    private void handleLogout() {
+        server.removeWorker(this);
+        for (ChatRoom room: listRoom){
+            room.removeUserOff(this);
         }
     }
 
