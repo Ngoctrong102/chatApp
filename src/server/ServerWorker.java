@@ -65,7 +65,6 @@ public class ServerWorker extends Thread{
         for (ChatRoom room: listRoom){
             room.removeUserOff(this);
         }
-        System.out.println(this.conti);
         if (!this.conti){
             this.conti = true;
             receiveMes();
@@ -234,10 +233,6 @@ public class ServerWorker extends Thread{
         }
     }
 
-    private void handleMessage(Message req) {
-
-
-    }
 
     private void handleLogin(DataLogin req) throws SQLException, IOException, ClassNotFoundException {
         PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM Users WHERE username = ?");
