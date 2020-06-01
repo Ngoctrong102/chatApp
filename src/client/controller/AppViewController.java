@@ -71,6 +71,7 @@ public class AppViewController {
         this.user = user;
     }
     public void loadView(){
+        roomCur = user.getRooms().get(0).roomID;
         loadViewUser();
         renderRoom();
     }
@@ -87,7 +88,7 @@ public class AppViewController {
         int i = 0;
         for (RoomInfo roomInfo: user.getRooms()){
             HBox hb = new HBox();
-            if (i==0) {
+            if (roomInfo.roomID==roomCur) {
                 hbCur = hb;
                 changeRoom(roomInfo.roomID,roomInfo.roomName);
             }
@@ -98,17 +99,19 @@ public class AppViewController {
             hb.setLayoutY(i*68);
             hb.setPrefHeight(68);
             hb.setPrefWidth(279);
-            hb.setStyle( i==0 ? "-fx-background-color: #393C43;" : "");
+            hb.setStyle( roomInfo.roomID == roomCur ? "-fx-background-color: #393C43;" : "");
             hb.getProperties().put("class","active");
+            int finalI = i;
             hb.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     hbCur.setStyle("");
                     hb.setStyle("-fx-background-color: #393C43;");
                     hbCur = hb;
-                    ImageView iv = (ImageView)hbCur.lookup("#new"+roomInfo.roomID);
-                    if (iv != null) hb.getChildren().remove(hb.getChildren().size()-1);
-                    System.out.println("room"+String.valueOf(roomInfo.roomID));
+                    user.getRooms().get(finalI).hasNewMess = false;
+                    if (hbCur.getChildren().get(hbCur.getChildren().size()-1) instanceof Pane){
+                        hbCur.getChildren().remove(hbCur.getChildren().size()-1);
+                    }
                     changeRoom(roomInfo.roomID,roomInfo.roomName);
                 }
             });
@@ -119,12 +122,24 @@ public class AppViewController {
             avt.setFitWidth(70);
             avt.setPickOnBounds(true);
             avt.setPreserveRatio(true);
-            Label username = new Label("Room "+roomInfo.roomName);
+            Label username = new Label(roomInfo.roomName);
             username.setPrefHeight(38);
             username.setPrefWidth(172);
             username.setTextFill(Paint.valueOf("WHITE"));
             username.setFont(Font.font(22));
             hb.getChildren().addAll(avt,username);
+            if (roomInfo.hasNewMess){
+                File filejoin = new File("src/client/image/newmess.png");
+                Image imagejoin = new Image(filejoin.toURI().toString());
+                ImageView ivjoin = new ImageView(imagejoin);
+                ivjoin.setFitWidth(30);
+                ivjoin.setFitHeight(28);
+                ivjoin.setPickOnBounds(true);
+                ivjoin.setPreserveRatio(true);
+                Pane pane = new Pane();
+                pane.getChildren().add(ivjoin);
+                hb.getChildren().add(pane);
+            }
             friendList.getChildren().add(hb);
             i++;
         }
@@ -148,23 +163,36 @@ public class AppViewController {
 
 
     public void renderFriend(ResponseFriend res) {
+//        <HBox alignment="CENTER_LEFT" layoutX="2.0" prefHeight="68.0" prefWidth="279.0" style="-fx-background-color: #393C43;">
+//                     <children>
+//                        <ImageView fitHeight="63.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+//                           <image>
+//                              <Image url="@../image/avartar.png" />
+//                           </image>
+//                        </ImageView>
+//                        <Label prefHeight="38.0" prefWidth="172.0" text="User2" textFill="WHITE">
+//                           <font>
+//                              <Font name="System Bold" size="22.0" />
+//                           </font>
+//                        </Label>
+//                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+//                           <image>
+//                              <Image url="@../image/btnonline.png" />
+//                           </image>
+//                        </ImageView>
+//                     </children>
+//                  </HBox>
         friendList.getChildren().clear();
         int i = 0;
-        for (ResponseFriend.FriendInfo friendInfo: res.listFriend){
+        for (ResponseFriend.FriendInfo fi: res.listFriend){
             HBox hb = new HBox();
+            System.out.println(hb.getId());
             hb.setAlignment(Pos.CENTER_LEFT);
             hb.setLayoutX(-3);
             hb.setLayoutY(i*68);
             hb.setPrefHeight(68);
             hb.setPrefWidth(279);
-            hb.setStyle("-fx-background-color: #393C43;");
             hb.getProperties().put("class","active");
-            hb.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    System.out.println("bam duoc r");
-                }
-            });
             File file = new File("src/client/image/avartar.png");
             Image image = new Image(file.toURI().toString());
             ImageView avt= new ImageView(image);
@@ -172,12 +200,22 @@ public class AppViewController {
             avt.setFitWidth(70);
             avt.setPickOnBounds(true);
             avt.setPreserveRatio(true);
-            Label username = new Label(friendInfo.username);
+            Label username = new Label(fi.username);
             username.setPrefHeight(38);
             username.setPrefWidth(172);
             username.setTextFill(Paint.valueOf("WHITE"));
             username.setFont(Font.font(22));
             hb.getChildren().addAll(avt,username);
+            if (true){
+                File filejoin = new File("src/client/image/btnonline.png");
+                Image imagejoin = new Image(filejoin.toURI().toString());
+                ImageView ivjoin = new ImageView(imagejoin);
+                ivjoin.setFitWidth(30);
+                ivjoin.setFitHeight(28);
+                ivjoin.setPickOnBounds(true);
+                ivjoin.setPreserveRatio(true);
+                hb.getChildren().add(ivjoin);
+            }
             friendList.getChildren().add(hb);
             i++;
         }
@@ -295,18 +333,12 @@ public class AppViewController {
             scrollMess.setVvalue(1);
         }
         else {
-            File filejoin = new File("src/client/image/join.png");
-            Image imagejoin = new Image(filejoin.toURI().toString());
-            ImageView ivjoin = new ImageView(imagejoin);
-            ivjoin.setFitWidth(30);
-            ivjoin.setFitHeight(28);
-            ivjoin.setPickOnBounds(true);
-            ivjoin.setPreserveRatio(true);
-            ivjoin.setId("#new"+mess.roomID);
-            System.out.println("#room"+mess.roomID);
-            for (Node node: messGroup.getChildren()){
-                System.out.println(((HBox)node).getId()+"đây nè");
+            for (RoomInfo roomInfo: user.getRooms()){
+                if (roomInfo.roomID == mess.roomID){
+                    roomInfo.hasNewMess = true;
+                }
             }
+            renderRoom();
         }
     }
 
@@ -317,9 +349,7 @@ public class AppViewController {
         System.out.println("tạo phòng mới");
     }
 
-    public void viewListMem(MouseEvent mouseEvent) {
 
-    }
 
     public void listRoomToJoin(ActionEvent actionEvent) {
         client.requestRoomToJoin();
@@ -344,7 +374,7 @@ public class AppViewController {
             avt.setFitWidth(70);
             avt.setPickOnBounds(true);
             avt.setPreserveRatio(true);
-            Label username = new Label("Room "+roomInfo.roomName);
+            Label username = new Label(roomInfo.roomName);
             username.setPrefHeight(38);
             username.setPrefWidth(172);
             username.setTextFill(Paint.valueOf("WHITE"));
@@ -375,5 +405,10 @@ public class AppViewController {
         if (this.file != null){
             System.out.println("có file rồi");
         }
+    }
+
+    public void viewListMem(ActionEvent actionEvent) {
+        System.out.println("view list mem");
+        client.memOf(roomCur);
     }
 }

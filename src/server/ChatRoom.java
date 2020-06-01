@@ -74,4 +74,8 @@ public class ChatRoom {
             worker.sendF(request);
         }
     }
+
+    public ArrayList<ServerWorker> getUsers() {
+        return listUserOnl;
+    }
 }

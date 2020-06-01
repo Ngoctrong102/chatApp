@@ -107,7 +107,10 @@ public class MainClient extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MainClient.class.getResource("view/AppView.fxml"));
         Parent root = loader.load();
-
+        File directory = new File(user.getUsername());
+        if (!directory.exists()){
+            directory.mkdir();
+        }
         avc = loader.getController();
         avc.setData(MainClient.cli,MainClient.user);
         avc.loadView();

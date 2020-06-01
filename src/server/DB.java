@@ -9,7 +9,7 @@ public class DB {
         Connection connection = null;
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://localhost:1433; databaseName=ChatApp";
+            String url = "jdbc:sqlserver://localhost:1433; databaseName=ChatApp1";
             String user = "sa";
             String pass = "123";
             connection = DriverManager.getConnection(url,user, pass);

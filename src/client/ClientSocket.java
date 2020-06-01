@@ -86,4 +86,12 @@ public class ClientSocket {
             e.printStackTrace();
         }
     }
+
+    public void memOf(int roomCur) {
+        try {
+            objectOutputStream.writeObject(new RequsestMemOf(roomCur));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

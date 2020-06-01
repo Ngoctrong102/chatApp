@@ -19,6 +19,11 @@ public class ResponseFriend implements Serializable {
         }
     }
 
+    public void add(User user) {
+        FriendInfo friendInfo = new FriendInfo(user.getId(),user.getUsername());
+        listFriend.add(friendInfo);
+    }
+
 
     public class FriendInfo implements Serializable{
         public int id;

@@ -66,6 +66,26 @@ public class ServerWorker extends Thread{
             if (request instanceof FileMess){
                 sendFile((FileMess)request);
             }
+            if (request instanceof RequsestMemOf){
+                returnListUser(((RequsestMemOf) request).roomID);
+            }
+        }
+    }
+
+    private void returnListUser(int roomID) {
+        for (ChatRoom chatRoom: listRoom){
+            if (chatRoom.getID() == roomID){
+                ArrayList<ServerWorker> listUser = chatRoom.getUsers();
+                ResponseFriend users = new ResponseFriend();
+                for (ServerWorker serverWorker: listUser){
+                    users.add(serverWorker.user);
+                }
+                try {
+                    outputStream.writeObject(users);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
