@@ -67,11 +67,15 @@
                         <Image url="@../image/avartar.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="username" prefHeight="38.0" prefWidth="155.0" text="User1" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Label>
+                  <VBox prefHeight="79.0" prefWidth="163.0">
+                     <children>
+                        <Label fx:id="username" alignment="BOTTOM_LEFT" prefHeight="54.0" prefWidth="148.0" text="User1" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                   <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#Logout" prefHeight="36.0" prefWidth="30.0">
                      <graphic>
                         <ImageView fitHeight="40.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">

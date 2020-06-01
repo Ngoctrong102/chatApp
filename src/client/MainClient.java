@@ -136,7 +136,7 @@ public class MainClient extends Application {
     @Override
     public void stop() {
         System.out.println("Stage is closing");
-        conti = false;
+        wait.stop();
         try {
             cli.close();
         } catch (IOException e) {
