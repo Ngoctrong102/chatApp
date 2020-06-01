@@ -3,6 +3,7 @@ package server;
 import data.serialize.*;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class ServerWorker extends Thread{
     private final ArrayList<ChatRoom> listRoom = new ArrayList<>();
     private User user;
     private Connection connection;
+    private boolean conti;
+
     public ServerWorker(Server server, Socket clientSocket) {
         this.server = server;
         this.clientSocket = clientSocket;
@@ -37,11 +40,11 @@ public class ServerWorker extends Thread{
     private void handleClient() throws IOException, ClassNotFoundException, SQLException {
         this.outputStream = new ObjectOutputStream(this.clientSocket.getOutputStream());
         this.inputStream = new ObjectInputStream(this.clientSocket.getInputStream());
-        while (true){
+        this.conti = true;
+        while (conti){
             Serializable request = (Serializable)inputStream.readObject();
             if (request instanceof RequestLogout){
                 handleLogout();
-                System.out.println("Logout from " + user.getUsername());
             }
             if (request instanceof DataLogin){
                 handleLogin((DataLogin)request);
@@ -56,6 +59,7 @@ public class ServerWorker extends Thread{
                 sendMess((RequestSendMess)request);
             }
             if (request instanceof Disconnect){
+                handleLogout();
                 disconnect((Disconnect)request);
             }
             if (request instanceof RequestCreateNewRoom){
@@ -77,6 +81,7 @@ public class ServerWorker extends Thread{
     }
 
     private void handleLogout() {
+        System.out.println("Logout from " + this.user.getUsername());
         server.removeWorker(this);
         for (ChatRoom room: listRoom){
             room.removeUserOff(this);
@@ -190,10 +195,14 @@ public class ServerWorker extends Thread{
         }
     }
 
-    private void disconnect(Disconnect request) {
-        for (ChatRoom room: listRoom){
-            server.turnOff(room,this);
+    private void disconnect(Disconnect request) throws IOException {
+        for (ChatRoom room: listRoom) {
+            server.turnOff(room, this);
         }
+        this.conti = false;
+        this.inputStream.close();
+        this.outputStream.close();
+        clientSocket.close();
     }
 
     private void sendMess(RequestSendMess request) {

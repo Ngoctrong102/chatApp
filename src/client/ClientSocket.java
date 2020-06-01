@@ -30,9 +30,10 @@ public class ClientSocket {
     }
 
     public void close() throws IOException {
+        objectOutputStream.writeObject(new Disconnect());
         socket.getInputStream().close();
         objectInputStream.close();
-        objectOutputStream.writeObject(new Disconnect());
+        objectOutputStream.close();
         socket.close();
     }
 

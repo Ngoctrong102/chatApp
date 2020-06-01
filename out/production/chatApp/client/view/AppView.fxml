@@ -18,7 +18,10 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.AppViewController">
    <children>
-      <Pane prefHeight="26.0" prefWidth="1200.0" style="-fx-background-color: #202225;" />
+      <Pane prefHeight="26.0" prefWidth="1200.0" style="-fx-background-color: #202225;">
+         <children>
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="1164.0" layoutY="-4.0" prefHeight="31.0" prefWidth="36.0" />
+         </children></Pane>
 <!--      <Button fx:id="btnsend" contentDisplay="GRAPHIC_ONLY" layoutX="1094.0" layoutY="714.0" mnemonicParsing="false" onAction="#Sendmsg" prefHeight="62.0" prefWidth="71.0" style="-fx-background-color: #36393F;" text="send" />-->
       <Pane layoutY="26.0" prefHeight="780.0" prefWidth="88.0" style="-fx-background-color: #202225;">
          <children>
@@ -90,12 +93,15 @@
                         <Font name="System Bold" size="30.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="btnMem" contentDisplay="GRAPHIC_ONLY" layoutX="754.0" layoutY="-8.0" onAction="#viewListMem" prefHeight="1.0" prefWidth="63.0" text="Button" />
-                  <ImageView fitHeight="53.0" fitWidth="54.0" layoutX="773.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../image/member.png" />
-                     </image>
-                  </ImageView>
+                  <JFXButton fx:id="btnMem" contentDisplay="GRAPHIC_ONLY" layoutX="779.0" layoutY="8.0" onAction="#viewListMem" prefHeight="31.0" prefWidth="41.0" text="Button">
+                     <graphic>
+                        <ImageView fitHeight="53.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/member.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                </children>
             </Pane>
          </top>

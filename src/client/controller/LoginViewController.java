@@ -29,7 +29,6 @@ public class LoginViewController {
         }
     }
 
-
     @FXML
     public void exitApplication(ActionEvent event) {
         Platform.exit();
