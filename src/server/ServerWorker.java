@@ -48,15 +48,18 @@ public class ServerWorker extends Thread{
             if (request instanceof Disconnect){
                 disconnect((Disconnect)request);
             }
-
         }
     }
 
-    private void handleLogout() {
+    private void handleLogout() throws IOException, ClassNotFoundException {
         System.out.println("Logout from " + this.user.getUsername());
         server.removeWorker(this);
         for (ChatRoom room: listRoom){
             room.removeUserOff(this);
+        }
+        Serializable request = (Serializable)inputStream.readObject();
+        if (request instanceof Disconnect){
+            disconnect((Disconnect)request);
         }
     }
 
@@ -228,7 +231,7 @@ public class ServerWorker extends Thread{
         ps.setString(1, req.getUsername());
         System.out.println(req.getUsername() + " " + req.getPassword());
         ResultSet resultSet = ps.executeQuery();
-        if (resultSet.next()==false) return;
+        if (!resultSet.next()) return;
         if (resultSet.getString("password").equals(req.getPassword())){
             user = new User(resultSet);
             if ( resultSet.getString("roomIDs") != null) {
