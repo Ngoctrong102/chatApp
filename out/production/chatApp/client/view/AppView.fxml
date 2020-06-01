@@ -182,7 +182,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXTextArea fx:id="msg" prefHeight="15.0" prefWidth="654.0" promptText="Message" unFocusColor="#40444b">
+                        <JFXTextArea fx:id="msg" onKeyPressed="#sendMsgKeyEvent" prefHeight="15.0" prefWidth="654.0" promptText="Message" unFocusColor="#40444b">
                            <font>
                               <Font size="19.0" />
                            </font>
@@ -261,7 +261,7 @@
       </ScrollPane>
       <HBox layoutX="104.0" layoutY="40.0">
          <children>
-            <JFXTextField fx:id="txtroomName" focusColor="WHITE" prefHeight="31.0" prefWidth="178.0" style="-fx-background-color: #ffffff;" text="Add Friend Here" unFocusColor="BLACK" />
+            <JFXTextField fx:id="txtroomName" focusColor="WHITE" onKeyPressed="#createRoomKeyEvent" prefHeight="31.0" prefWidth="178.0" promptText="Add Friend Here" style="-fx-background-color: #ffffff;" unFocusColor="BLACK" />
             <Pane prefHeight="31.0" prefWidth="6.0" style="-fx-background-color: #202225;" visible="false" />
             <JFXButton fx:id="addRoom" onAction="#createRoom" prefHeight="31.0" prefWidth="63.0" style="-fx-background-color: #43B581;" text="Add" />
          </children>

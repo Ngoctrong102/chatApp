@@ -18,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -270,7 +272,7 @@ public class AppViewController {
         renderRoom();
     }
 
-    public void Sendmsg(ActionEvent actionEvent) {
+    public void Sendmsg() {
         if (this.file != null){
             try {
                 client.sendFile(new FileMess(user.getId(),roomCur,file));
@@ -290,6 +292,12 @@ public class AppViewController {
             client.sendMess(new RequestSendMess(mess));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void sendMsgKeyEvent(KeyEvent event) throws IOException {
+        if(event.getCode() == KeyCode.ENTER) {
+            Sendmsg();
         }
     }
 
@@ -343,10 +351,16 @@ public class AppViewController {
     }
 
 
-    public void createRoom(ActionEvent actionEvent) {
+    public void createRoom() {
         client.creatRoom(new RequestCreateNewRoom(txtroomName.getText(),user.getId()));
         txtroomName.setText("");
         System.out.println("tạo phòng mới");
+    }
+
+    public void createRoomKeyEvent(KeyEvent event) throws IOException {
+        if(event.getCode() == KeyCode.ENTER) {
+            createRoom();
+        }
     }
 
 

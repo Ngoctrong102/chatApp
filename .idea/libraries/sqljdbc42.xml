@@ -1,7 +1,8 @@
 <component name="libraryTable">
   <library name="sqljdbc42">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/Microsoft JDBC Driver 6.0 for SQL Server/sqljdbc_6.0/enu/jre8/sqljdbc42.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/sqljdbc42.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfoenix-8.0.8.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
