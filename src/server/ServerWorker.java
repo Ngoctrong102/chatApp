@@ -36,26 +36,8 @@ public class ServerWorker extends Thread{
             e.printStackTrace();
         }
     }
-    private void handleClient() throws IOException, ClassNotFoundException, SQLException {
-        this.outputStream = new ObjectOutputStream(this.clientSocket.getOutputStream());
-        this.inputStream = new ObjectInputStream(this.clientSocket.getInputStream());
-        this.conti = true;
-        while (conti){
-            Serializable request = (Serializable)inputStream.readObject();
-            if (request instanceof DataLogin){
-                handleLogin((DataLogin)request);
-            }
-            if (request instanceof RequestRegister){
-                handleRegister((RequestRegister) request);
-            }
-            if (request instanceof Disconnect){
-                disconnect((Disconnect)request);
-            }
-        }
-    }
 
     private void receiveMes() throws SQLException, IOException, ClassNotFoundException {
-        System.out.println(conti);
         while (this.conti){
             Serializable request = (Serializable)inputStream.readObject();
             if (request instanceof DataLogin){
@@ -70,6 +52,13 @@ public class ServerWorker extends Thread{
         }
     }
 
+    private void handleClient() throws IOException, ClassNotFoundException, SQLException {
+        this.outputStream = new ObjectOutputStream(this.clientSocket.getOutputStream());
+        this.inputStream = new ObjectInputStream(this.clientSocket.getInputStream());
+        this.conti = true;
+        receiveMes();
+    }
+
     private void handleLogout() throws IOException, ClassNotFoundException, SQLException {
         System.out.println("Logout from " + this.user.getUsername());
         server.removeWorker(this);
@@ -78,11 +67,11 @@ public class ServerWorker extends Thread{
         }
         System.out.println(this.conti);
         if (!this.conti){
-            System.out.println("Vô rồi");
             this.conti = true;
             receiveMes();
         }
     }
+
 
     private void handleRegister(RequestRegister request) {
     }
@@ -278,7 +267,6 @@ public class ServerWorker extends Thread{
             if (request instanceof RequestLogout){
                 this.conti = false;
                 handleLogout();
-                System.out.println("O day conti false");
             }
             if (request instanceof RequestFriend){
                 returnListFriend((RequestFriend)request);
