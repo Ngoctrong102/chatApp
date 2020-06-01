@@ -54,22 +54,37 @@ public class ServerWorker extends Thread{
         }
     }
 
-    private void handleRegister(RequestRegister request) {
-
+    private void receiveMes() throws SQLException, IOException, ClassNotFoundException {
+        System.out.println(conti);
+        while (this.conti){
+            Serializable request = (Serializable)inputStream.readObject();
+            if (request instanceof DataLogin){
+                handleLogin((DataLogin)request);
+            }
+            if (request instanceof RequestRegister){
+                handleRegister((RequestRegister) request);
+            }
+            if (request instanceof Disconnect){
+                disconnect((Disconnect)request);
+            }
+        }
     }
 
-    private void handleLogout() throws IOException, ClassNotFoundException {
+    private void handleLogout() throws IOException, ClassNotFoundException, SQLException {
         System.out.println("Logout from " + this.user.getUsername());
         server.removeWorker(this);
         for (ChatRoom room: listRoom){
             room.removeUserOff(this);
         }
-        if (!conti){
-            Serializable request = (Serializable)inputStream.readObject();
-            if (request instanceof Disconnect){
-                disconnect((Disconnect)request);
-            }
+        System.out.println(this.conti);
+        if (!this.conti){
+            System.out.println("Vô rồi");
+            this.conti = true;
+            receiveMes();
         }
+    }
+
+    private void handleRegister(RequestRegister request) {
     }
 
     private void returnListUser(int roomID) {
@@ -219,7 +234,7 @@ public class ServerWorker extends Thread{
             PreparedStatement ps = this.connection.prepareStatement("SELECT friendIDs FROM Users WHERE id = ?");
             ps.setString(1, String.valueOf(request.id));
             ResultSet resultSet = ps.executeQuery();
-            if (resultSet.next()==false) outputStream.writeObject(new ResponseFriend());
+            if (!resultSet.next()) outputStream.writeObject(new ResponseFriend());
             String listID = resultSet.getString("friendIDs");
             String stm = "SELECT * FROM Users WHERE id IN ("+ listID + ")";
             ps = this.connection.prepareStatement(stm);
@@ -261,8 +276,9 @@ public class ServerWorker extends Thread{
         while (conti){
             Serializable request = (Serializable)inputStream.readObject();
             if (request instanceof RequestLogout){
-                handleLogout();
                 this.conti = false;
+                handleLogout();
+                System.out.println("O day conti false");
             }
             if (request instanceof RequestFriend){
                 returnListFriend((RequestFriend)request);
