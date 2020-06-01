@@ -64,6 +64,12 @@ public class ServerWorker extends Thread{
         for (ChatRoom room: listRoom){
             room.removeUserOff(this);
         }
+        if (!conti){
+            Serializable request = (Serializable)inputStream.readObject();
+            if (request instanceof Disconnect){
+                disconnect((Disconnect)request);
+            }
+        }
     }
 
     private void returnListUser(int roomID) {
@@ -256,6 +262,7 @@ public class ServerWorker extends Thread{
             Serializable request = (Serializable)inputStream.readObject();
             if (request instanceof RequestLogout){
                 handleLogout();
+                this.conti = false;
             }
             if (request instanceof RequestFriend){
                 returnListFriend((RequestFriend)request);
