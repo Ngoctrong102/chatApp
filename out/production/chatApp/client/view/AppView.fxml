@@ -18,10 +18,7 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.AppViewController">
    <children>
-      <Pane prefHeight="26.0" prefWidth="1200.0" style="-fx-background-color: #202225;">
-         <children>
-            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="1164.0" layoutY="-4.0" prefHeight="31.0" prefWidth="36.0" />
-         </children></Pane>
+      <Pane prefHeight="26.0" prefWidth="1200.0" style="-fx-background-color: #202225;" />
 <!--      <Button fx:id="btnsend" contentDisplay="GRAPHIC_ONLY" layoutX="1094.0" layoutY="714.0" mnemonicParsing="false" onAction="#Sendmsg" prefHeight="62.0" prefWidth="71.0" style="-fx-background-color: #36393F;" text="send" />-->
       <Pane layoutY="26.0" prefHeight="780.0" prefWidth="88.0" style="-fx-background-color: #202225;">
          <children>
@@ -69,9 +66,14 @@
                   </ImageView>
                   <VBox prefHeight="79.0" prefWidth="163.0">
                      <children>
-                        <Label fx:id="username" alignment="BOTTOM_LEFT" prefHeight="54.0" prefWidth="148.0" text="User1" textFill="WHITE">
+                        <Label fx:id="username" alignment="BOTTOM_LEFT" prefHeight="47.0" prefWidth="148.0" text="User1" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="22.0" />
+                              <Font name="System Bold" size="25.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="id" alignment="TOP_CENTER" text="#1" textFill="#c3bdbd">
+                           <font>
+                              <Font size="17.0" />
                            </font>
                         </Label>
                      </children>

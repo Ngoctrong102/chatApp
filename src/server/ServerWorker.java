@@ -45,10 +45,17 @@ public class ServerWorker extends Thread{
             if (request instanceof DataLogin){
                 handleLogin((DataLogin)request);
             }
+            if (request instanceof RequestRegister){
+                handleRegister((RequestRegister) request);
+            }
             if (request instanceof Disconnect){
                 disconnect((Disconnect)request);
             }
         }
+    }
+
+    private void handleRegister(RequestRegister request) {
+
     }
 
     private void handleLogout() throws IOException, ClassNotFoundException {
@@ -56,10 +63,6 @@ public class ServerWorker extends Thread{
         server.removeWorker(this);
         for (ChatRoom room: listRoom){
             room.removeUserOff(this);
-        }
-        Serializable request = (Serializable)inputStream.readObject();
-        if (request instanceof Disconnect){
-            disconnect((Disconnect)request);
         }
     }
 

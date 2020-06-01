@@ -54,6 +54,8 @@ public class AppViewController {
     @FXML
     private Label username = new Label();
     @FXML
+    private Label id;
+    @FXML
     private JFXTextArea msg = new JFXTextArea();
     @FXML
     private ScrollPane scrollMess = new ScrollPane();
@@ -61,6 +63,7 @@ public class AppViewController {
     private HBox hbCur = null;
     @FXML
     private BorderPane chatframe;
+
     @FXML
     public void exitApplication(ActionEvent event) {
         Platform.exit();
@@ -154,7 +157,7 @@ public class AppViewController {
 
     private void loadViewUser() {
         username.setText(user.getUsername());
-
+        id.setText("#"+ user.getId());
     }
 
     public void handlebutton(ActionEvent actionEvent) {
