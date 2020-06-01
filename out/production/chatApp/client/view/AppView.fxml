@@ -108,7 +108,7 @@
          <center>
             <Pane prefHeight="702.0" prefWidth="840.0" BorderPane.alignment="CENTER">
                <children>
-                  <ScrollPane fx:id="scrollMess" layoutX="6.0" layoutY="-1.0" prefHeight="638.0" prefWidth="827.0" style="-fx-background: #36393F; -fx-border-color: #36393F;">
+                  <ScrollPane fx:id="scrollMess" layoutX="8.0" layoutY="-1.0" prefHeight="638.0" prefWidth="825.0" style="-fx-background: #36393F; -fx-border-color: #36393F;">
                      <content>
                         <Group fx:id="messGroup">
                            <children>
@@ -142,14 +142,14 @@
                                           <Image url="@../image/avartar.png" />
                                        </image>
                                     </ImageView>
-                                    <VBox alignment="TOP_CENTER" prefHeight="76.0" prefWidth="751.0">
+                                    <VBox alignment="TOP_CENTER" prefHeight="76.0" prefWidth="730.0">
                                        <children>
                                           <Label prefHeight="38.0" prefWidth="713.0" text="User1" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="22.0" />
                                              </font>
                                           </Label>
-                                          <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="59.0" prefWidth="716.0" text="Hello, my name is User1" textFill="WHITE">
+                                          <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="37.0" prefWidth="710.0" text="Hello, my name is User1" textFill="WHITE">
                                              <font>
                                                 <Font size="19.0" />
                                              </font>

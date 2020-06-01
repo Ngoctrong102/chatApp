@@ -36,9 +36,7 @@ public class MainClient extends Application {
                     Serializable res = null;
                     try {
                         res = (Serializable) MainClient.cli.objectInputStream.readObject();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
+                    } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                     Serializable finalRes = res;
@@ -145,5 +143,4 @@ public class MainClient extends Application {
             e.printStackTrace();
         }
     }
-
 }

@@ -162,25 +162,6 @@ public class AppViewController {
     }
 
     public void renderFriend(ResponseFriend res) {
-//        <HBox alignment="CENTER_LEFT" layoutX="2.0" prefHeight="68.0" prefWidth="279.0" style="-fx-background-color: #393C43;">
-//                     <children>
-//                        <ImageView fitHeight="63.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-//                           <image>
-//                              <Image url="@../image/avartar.png" />
-//                           </image>
-//                        </ImageView>
-//                        <Label prefHeight="38.0" prefWidth="172.0" text="User2" textFill="WHITE">
-//                           <font>
-//                              <Font name="System Bold" size="22.0" />
-//                           </font>
-//                        </Label>
-//                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-//                           <image>
-//                              <Image url="@../image/btnonline.png" />
-//                           </image>
-//                        </ImageView>
-//                     </children>
-//                  </HBox>
         friendList.getChildren().clear();
         int i = 0;
         for (ResponseFriend.FriendInfo fi: res.listFriend){
@@ -357,7 +338,6 @@ public class AppViewController {
         txtroomName.setText("");
         System.out.println("tạo phòng mới");
     }
-
 
 
     public void listRoomToJoin(ActionEvent actionEvent) {
