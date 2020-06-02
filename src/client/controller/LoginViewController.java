@@ -58,17 +58,19 @@ public class LoginViewController {
         if (!confirmpass.equals(password)){
             Alert alert = new Alert(AlertType.WARNING);
             alert.setContentText("Password is different!");
+            alert.showAndWait();
             Password1.setText("");
             Password2.setText("");
         } else {
             try {
                 client.objectOutputStream.writeObject(register);
+                LoginPane.setVisible(true);
+                RegisterPane.setVisible(false);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        LoginPane.setVisible(true);
-        RegisterPane.setVisible(false);
+
     }
 
     @FXML
