@@ -67,7 +67,8 @@ public class LoginViewController {
                 e.printStackTrace();
             }
         }
-
+        LoginPane.setVisible(true);
+        RegisterPane.setVisible(false);
     }
 
     @FXML
