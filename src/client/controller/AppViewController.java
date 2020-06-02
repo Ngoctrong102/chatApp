@@ -74,7 +74,7 @@ public class AppViewController {
         this.user = user;
     }
     public void loadView(){
-        roomCur = user.getRooms().get(0).roomID;
+        roomCur = user.getRooms().size() > 0? roomCur = user.getRooms().get(0).roomID:0;
         loadViewUser();
         //renderRoom();
         chatframe.setVisible(false);

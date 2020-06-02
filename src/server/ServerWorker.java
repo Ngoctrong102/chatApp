@@ -44,7 +44,8 @@ public class ServerWorker extends Thread{
                 handleLogin((DataLogin)request);
             }
             if (request instanceof RequestRegister){
-                handleRegister((RequestRegister) request);
+                System.out.println("Vo day khong nhi");
+                handleRegister((RequestRegister)request);
             }
             if (request instanceof Disconnect){
                 disconnect((Disconnect)request);
@@ -71,8 +72,19 @@ public class ServerWorker extends Thread{
         }
     }
 
-
     private void handleRegister(RequestRegister request) {
+        System.out.println(request.getUsername() + " " + request.getPassword());
+        PreparedStatement ps;
+        try {
+            String stm = "INSERT INTO Users (username,password,friendIDs) VALUES (N'"+ request.getUsername() +"',N'" + request.getPassword() + "',N'" + "1" + "')";
+            System.out.println(stm);
+            ps = connection.prepareStatement(stm,Statement.RETURN_GENERATED_KEYS);
+            int affectedRows = ps.executeUpdate();
+            ResultSet resultSet = ps.getGeneratedKeys();
+            resultSet.next();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     private void returnListUser(int roomID) {
