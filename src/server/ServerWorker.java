@@ -44,7 +44,6 @@ public class ServerWorker extends Thread{
                 handleLogin((DataLogin)request);
             }
             if (request instanceof RequestRegister){
-                System.out.println("Vo day khong nhi");
                 handleRegister((RequestRegister)request);
             }
             if (request instanceof Disconnect){
