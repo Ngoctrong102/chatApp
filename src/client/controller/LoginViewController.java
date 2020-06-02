@@ -79,6 +79,11 @@ public class LoginViewController {
         RegisterPane.setVisible(true);
     }
 
+    @FXML
+    void backlogin(ActionEvent event) {
+        LoginPane.setVisible(true);
+        RegisterPane.setVisible(false);
+    }
 
     @FXML
     public void exitApplication(ActionEvent event) {
