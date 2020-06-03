@@ -61,6 +61,7 @@
             </Label>
             <PasswordField fx:id="Password2" layoutX="168.0" layoutY="347.0" prefHeight="46.0" prefWidth="262.0" />
             <Label layoutX="168.0" layoutY="314.0" text="CONFIRM PASSWORD" textFill="#b9bbbe" />
+            <JFXButton layoutX="168.0" layoutY="492.0" onAction="#backlogin" prefHeight="31.0" prefWidth="192.0" text="Already have an account?" textFill="#677bc4" />
          </children>
       </Pane>
    </children>
