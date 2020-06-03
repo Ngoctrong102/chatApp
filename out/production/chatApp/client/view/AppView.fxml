@@ -25,7 +25,7 @@
             <Line endX="-50.0" endY="-1.52587890625E-5" layoutX="106.0" layoutY="76.0" startX="-75.0" startY="-1.52587890625E-5" stroke="#dfd2d2" />
             <VBox layoutY="77.0" style="-fx-background-color: #202225;">
                <children>
-                  <JFXButton fx:id="roomsIcon" contentDisplay="GRAPHIC_ONLY" onAction="#getRooms" prefHeight="77.0" prefWidth="88.0" text="Button">
+                  <JFXButton fx:id="roomsIcon" contentDisplay="GRAPHIC_ONLY" focusTraversable="false" onAction="#getRooms" prefHeight="77.0" prefWidth="88.0" text="Button">
                      <graphic>
                         <ImageView fitHeight="66.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
                            <image>
