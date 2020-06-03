@@ -54,6 +54,15 @@
                   </ImageView>
                </graphic>
             </JFXButton>
+            <JFXButton fx:id="btnMem" contentDisplay="GRAPHIC_ONLY" layoutY="154.0" onAction="#viewListMem" prefHeight="76.0" prefWidth="86.0" text="Button" visible="false">
+               <graphic>
+                  <ImageView fitHeight="42.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/btnonline.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
          </children></Pane>
       <Pane layoutX="88.0" layoutY="730.0" prefHeight="76.0" prefWidth="285.0" style="-fx-background-color: #282A2E;">
          <children>
@@ -99,15 +108,6 @@
                         <Font name="System Bold" size="30.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="btnMem" contentDisplay="GRAPHIC_ONLY" layoutX="779.0" layoutY="8.0" onAction="#viewListMem" prefHeight="31.0" prefWidth="41.0" text="Button">
-                     <graphic>
-                        <ImageView fitHeight="53.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../image/member.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
                </children>
             </Pane>
          </top>

@@ -71,6 +71,8 @@ public class AppViewController {
     private HBox hbCur = null;
     @FXML
     private BorderPane chatframe;
+    @FXML
+    private JFXButton btnMem;
 
     @FXML
     public void exitApplication(ActionEvent event) {
@@ -96,6 +98,7 @@ public class AppViewController {
         }
     }
     public void renderRoom() {
+        btnMem.setVisible(true);
         friendList.getChildren().clear();
         int i = 0;
         for (RoomInfo roomInfo: user.getRooms()){
@@ -127,7 +130,7 @@ public class AppViewController {
                     changeRoom(roomInfo.roomID,roomInfo.roomName);
                 }
             });
-            File file = new File("src/client/image/avartar.png");
+            File file = new File("src/client/image/groupavatar.png");
             Image image = new Image(file.toURI().toString());
             ImageView avt= new ImageView(image);
             avt.setFitHeight(63);
@@ -181,8 +184,8 @@ public class AppViewController {
             hb.setAlignment(Pos.CENTER_LEFT);
             hb.setLayoutX(-3);
             hb.setLayoutY(i*68);
-            hb.setPrefHeight(68);
-            hb.setPrefWidth(279);
+            hb.setPrefHeight(66);
+            hb.setPrefWidth(270);
             hb.getProperties().put("class","active");
             File file = new File("src/client/image/avartar.png");
             Image image = new Image(file.toURI().toString());
@@ -477,6 +480,7 @@ public class AppViewController {
     }
 
     public void renderRoomToJoin(ResponseListRoom res) {
+        btnMem.setVisible(false);
         friendList.getChildren().clear();
         int i = 0;
         for (RoomInfo roomInfo: res.roomInfos){
@@ -484,11 +488,11 @@ public class AppViewController {
             hb.setAlignment(Pos.CENTER_LEFT);
             hb.setLayoutX(2);
             hb.setLayoutY(i*68);
-            hb.setPrefHeight(68);
-            hb.setPrefWidth(279);
+            hb.setPrefHeight(66);
+            hb.setPrefWidth(270);
             hb.setStyle( i==0 ? "-fx-background-color: #393C43;" : "");
             hb.getProperties().put("class","active");
-            File file = new File("src/client/image/avartar.png");
+            File file = new File("src/client/image/groupavatar.png");
             Image image = new Image(file.toURI().toString());
             ImageView avt= new ImageView(image);
             avt.setFitHeight(63);
