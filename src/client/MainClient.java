@@ -84,11 +84,7 @@ public class MainClient extends Application {
         }
         if (res instanceof FileMess){
             saveFile((FileMess)res);
-            Message mess = new Message();
-            mess.roomID = ((FileMess) res).roomID;
-            mess.from = ((FileMess) res).from;
-            mess.content = ((FileMess) res).fileName;
-            avc.renderNewMess(mess);
+            avc.renderNewFile((FileMess)res);
         }
     }
 
