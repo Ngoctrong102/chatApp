@@ -223,7 +223,7 @@ public class AppViewController {
             HBox hb = new HBox();
             hb.setLayoutY(nextPosMess);
             hb.setPrefHeight(76);
-            hb.setPrefWidth(814);
+            hb.setPrefWidth(785);
             File file = new File("src/client/image/avartar.png");
             Image image = new Image(file.toURI().toString());
             ImageView avt= new ImageView(image);
@@ -305,7 +305,7 @@ public class AppViewController {
             HBox hb = new HBox();
             hb.setLayoutY(nextPosMess);
             hb.setPrefHeight(76);
-            hb.setPrefWidth(814);
+            hb.setPrefWidth(785);
             File file = new File("src/client/image/avartar.png");
             Image image = new Image(file.toURI().toString());
             ImageView avt = new ImageView(image);
