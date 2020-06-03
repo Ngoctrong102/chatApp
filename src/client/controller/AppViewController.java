@@ -74,10 +74,6 @@ public class AppViewController {
     @FXML
     private JFXButton btnMem;
 
-    @FXML
-    public void exitApplication(ActionEvent event) {
-        Platform.exit();
-    }
 
     public void setData(ClientSocket cli, User user) {
         this.client = cli;
@@ -86,7 +82,6 @@ public class AppViewController {
     public void loadView(){
         roomCur = user.getRooms().size() > 0? roomCur = user.getRooms().get(0).roomID:0;
         loadViewUser();
-        //renderRoom();
         chatframe.setVisible(false);
     }
 
@@ -113,7 +108,7 @@ public class AppViewController {
             hb.setLayoutX(-3);
             hb.setLayoutY(i*68);
             hb.setPrefHeight(68);
-            hb.setPrefWidth(279);
+            hb.setPrefWidth(281);
             hb.setStyle( roomInfo.roomID == roomCur ? "-fx-background-color: #393C43;" : "");
             hb.getProperties().put("class","active");
             int finalI = i;
@@ -302,6 +297,7 @@ public class AppViewController {
 
     public void renderNewMess(Message mess) {
         if (mess.roomID == roomCur) {
+            Label content = new Label(mess.content);
             HBox hb = new HBox();
             hb.setLayoutY(nextPosMess);
             hb.setPrefHeight(76);
@@ -316,7 +312,6 @@ public class AppViewController {
             username.setFont(Font.font(22));
             username.setPrefHeight(38);
             username.setPrefWidth(713);
-            Label content = new Label(mess.content);
             content.setContentDisplay(ContentDisplay.valueOf("CENTER"));
             content.setPrefWidth(716);
             content.setPrefHeight(59);
@@ -350,7 +345,6 @@ public class AppViewController {
             }
             renderRoom();
         }
-
     }
 
     public void renderNewFile(FileMess fileRender) {
@@ -488,8 +482,8 @@ public class AppViewController {
             hb.setAlignment(Pos.CENTER_LEFT);
             hb.setLayoutX(2);
             hb.setLayoutY(i*68);
-            hb.setPrefHeight(66);
-            hb.setPrefWidth(270);
+            hb.setPrefHeight(68);
+            hb.setPrefWidth(281);
             hb.setStyle( i==0 ? "-fx-background-color: #393C43;" : "");
             hb.getProperties().put("class","active");
             File file = new File("src/client/image/groupavatar.png");
