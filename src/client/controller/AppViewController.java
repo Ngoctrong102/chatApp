@@ -8,26 +8,34 @@ import com.jfoenix.controls.JFXTextField;
 import com.sun.security.ntlm.Client;
 import data.serialize.*;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class AppViewController {
@@ -260,7 +268,7 @@ public class AppViewController {
         renderRoom();
     }
 
-    public void Sendmsg(ActionEvent actionEvent) {
+    public void Sendmsg() {
         if (this.file != null){
             try {
                 client.sendFile(new FileMess(user.getId(),roomCur,file));
@@ -280,6 +288,12 @@ public class AppViewController {
             client.sendMess(new RequestSendMess(mess));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void sendMsgKeyEvent(KeyEvent event) throws IOException {
+        if(event.getCode() == KeyCode.ENTER) {
+            Sendmsg();
         }
     }
 
@@ -336,10 +350,124 @@ public class AppViewController {
 
     }
 
-    public void createRoom(ActionEvent actionEvent) {
+    public void renderNewFile(FileMess fileRender) {
+        if (fileRender.roomID == roomCur) {
+            HBox hb = new HBox();
+            hb.setLayoutY(nextPosMess);
+            hb.setPrefHeight(76);
+            hb.setPrefWidth(773);
+            File file = new File("src/client/image/avartar.png");
+            Image image = new Image(file.toURI().toString());
+            ImageView avt = new ImageView(image);
+            Label username = new Label("User " + fileRender.from);
+            username.setTextFill(Paint.valueOf("WHITE"));
+            username.setFont(Font.font(22));
+            username.setPrefHeight(38);
+            username.setPrefWidth(713);
+            Label content = new Label(fileRender.fileName);
+
+            content.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getButton() == MouseButton.PRIMARY) {     // add action show image
+                        if (fileRender.fileName.contains(".png") || fileRender.fileName.contains(".jpeg") ||
+                                fileRender.fileName.contains(".jpg") ) {
+                            byte[] imageInByte = fileRender.fileData;
+                            BufferedImage img1 = null;
+                            try {
+                                img1 = ImageIO.read(new ByteArrayInputStream(imageInByte));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Image image = SwingFXUtils.toFXImage(img1, null);
+                            ImageView imageView = new ImageView(image);
+                            imageView.setFitHeight(1500);
+                            imageView.setFitWidth(1500);
+                            imageView.setPreserveRatio(true);
+
+                            // Create display
+                            GridPane pane = new GridPane();
+                            pane.getChildren().addAll(imageView);
+                            Scene picture = new Scene(pane, 1500, 800);
+
+                            Stage window = new Stage();
+                            window.setScene(picture);
+                            window.setTitle(fileRender.fileName);
+                            window.show();
+                        }
+
+                        event.consume();
+
+                    } else if (event.getButton() == MouseButton.SECONDARY) { // add action save file to location
+                        FileChooser ch = new FileChooser();
+                        ch.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG", "*.png"));
+                        ch.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPEG", "*.jpg"));
+                        ch.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
+                        ch.getExtensionFilters().add(new FileChooser.ExtensionFilter("txt", "*.txt"));
+                        ch.getExtensionFilters().add(new FileChooser.ExtensionFilter("doc", "*.doc"));
+                        File file = ch.showSaveDialog(null);
+
+                        if (file != null) {
+                            try {
+                                FileOutputStream out = new FileOutputStream(file);
+                                out.write(fileRender.fileData);
+                                out.close();
+                            } catch (Exception e) {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Error Dialog");
+                                alert.setContentText("Oops, File not found!");
+                                alert.showAndWait();
+                            }
+
+                        }
+                    }
+                }
+            });
+
+            content.setContentDisplay(ContentDisplay.valueOf("CENTER"));
+            content.setPrefWidth(716);
+            content.setPrefHeight(59);
+            content.setTextFill(Paint.valueOf("WHITE"));
+            content.setFont(Font.font(19));
+            VBox vb = new VBox();
+            vb.setAlignment(Pos.valueOf("TOP_CENTER"));
+            vb.setPrefHeight(82);
+            vb.getChildren().addAll(username, content);
+            if (fileRender.from == user.getId()) {
+                username.setAlignment(Pos.valueOf("TOP_RIGHT"));
+                content.setAlignment(Pos.valueOf("TOP_RIGHT"));
+                hb.getChildren().add(vb);
+                hb.getChildren().add(avt);
+            } else {
+                username.setAlignment(Pos.valueOf("TOP_LEFT"));
+                content.setAlignment(Pos.valueOf("TOP_LEFT"));
+                hb.getChildren().add(avt);
+                hb.getChildren().add(vb);
+            }
+            messGroup.getChildren().add(hb);
+            nextPosMess += 68;
+            scrollMess.setVvalue(1);
+        }
+        else {
+            for (RoomInfo roomInfo: user.getRooms()){
+                if (roomInfo.roomID == fileRender.roomID){
+                    roomInfo.hasNewMess = true;
+                }
+            }
+            renderRoom();
+        }
+    }
+
+    public void createRoom() {
         client.creatRoom(new RequestCreateNewRoom(txtroomName.getText(),user.getId()));
         txtroomName.setText("");
         System.out.println("tạo phòng mới");
+    }
+
+    public void createRoomKeyEvent(KeyEvent event) throws IOException {
+        if(event.getCode() == KeyCode.ENTER) {
+            createRoom();
+        }
     }
 
 
