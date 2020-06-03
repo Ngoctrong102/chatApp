@@ -17,6 +17,7 @@ public class ServerWorker extends Thread{
     private Connection connection;
     private boolean conti;
 
+
     public ServerWorker(Server server, Socket clientSocket) {
         this.server = server;
         this.clientSocket = clientSocket;
@@ -250,7 +251,11 @@ public class ServerWorker extends Thread{
         ps.setString(1, req.getUsername());
         System.out.println(req.getUsername() + " " + req.getPassword());
         ResultSet resultSet = ps.executeQuery();
-        if (!resultSet.next()) return;
+        if (!resultSet.next() || !resultSet.getString("password").equals(req.getPassword())) {
+            LoginFailed loginfailed = new LoginFailed();
+            outputStream.writeObject(loginfailed);
+            return;
+        }
         if (resultSet.getString("password").equals(req.getPassword())){
             user = new User(resultSet);
             if ( resultSet.getString("roomIDs") != null) {

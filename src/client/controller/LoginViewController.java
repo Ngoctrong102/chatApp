@@ -46,6 +46,8 @@ public class LoginViewController {
         DataLogin dataLogin = new DataLogin(username,password);
         try {
             client.objectOutputStream.writeObject(dataLogin);
+            Username.setText("");
+            Password.setText("");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ContentDisplay;
@@ -85,13 +86,6 @@ public class AppViewController {
         chatframe.setVisible(false);
     }
 
-    public void getFriends(ActionEvent actionEvent) {
-        try {
-            client.requestFriends(new RequestFriend(user.getId()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public void renderRoom() {
         btnMem.setVisible(true);
         friendList.getChildren().clear();
@@ -102,7 +96,7 @@ public class AppViewController {
                 hbCur = hb;
                 changeRoom(roomInfo.roomID,roomInfo.roomName);
             }
-            hb.setId("room"+String.valueOf(roomInfo.roomID));
+            hb.setId("room"+ roomInfo.roomID);
             System.out.println(hb.getId());
             hb.setAlignment(Pos.CENTER_LEFT);
             hb.setLayoutX(-3);
@@ -112,18 +106,15 @@ public class AppViewController {
             hb.setStyle( roomInfo.roomID == roomCur ? "-fx-background-color: #393C43;" : "");
             hb.getProperties().put("class","active");
             int finalI = i;
-            hb.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    hbCur.setStyle("");
-                    hb.setStyle("-fx-background-color: #393C43;");
-                    hbCur = hb;
-                    user.getRooms().get(finalI).hasNewMess = false;
-                    if (hbCur.getChildren().get(hbCur.getChildren().size()-1) instanceof Pane){
-                        hbCur.getChildren().remove(hbCur.getChildren().size()-1);
-                    }
-                    changeRoom(roomInfo.roomID,roomInfo.roomName);
+            hb.setOnMouseClicked(event -> {
+                hbCur.setStyle("");
+                hb.setStyle("-fx-background-color: #393C43;");
+                hbCur = hb;
+                user.getRooms().get(finalI).hasNewMess = false;
+                if (hbCur.getChildren().get(hbCur.getChildren().size()-1) instanceof Pane){
+                    hbCur.getChildren().remove(hbCur.getChildren().size()-1);
                 }
+                changeRoom(roomInfo.roomID,roomInfo.roomName);
             });
             File file = new File("src/client/image/groupavatar.png");
             Image image = new Image(file.toURI().toString());
@@ -164,50 +155,6 @@ public class AppViewController {
     private void loadViewUser() {
         username.setText(user.getUsername());
         id.setText("#"+ user.getId());
-    }
-
-    public void handlebutton(ActionEvent actionEvent) {
-
-    }
-
-    public void renderFriend(ResponseFriend res) {
-        friendList.getChildren().clear();
-        int i = 0;
-        for (ResponseFriend.FriendInfo fi: res.listFriend){
-            HBox hb = new HBox();
-            System.out.println(hb.getId());
-            hb.setAlignment(Pos.CENTER_LEFT);
-            hb.setLayoutX(-3);
-            hb.setLayoutY(i*68);
-            hb.setPrefHeight(66);
-            hb.setPrefWidth(270);
-            hb.getProperties().put("class","active");
-            File file = new File("src/client/image/avartar.png");
-            Image image = new Image(file.toURI().toString());
-            ImageView avt= new ImageView(image);
-            avt.setFitHeight(63);
-            avt.setFitWidth(70);
-            avt.setPickOnBounds(true);
-            avt.setPreserveRatio(true);
-            Label username = new Label(fi.username);
-            username.setPrefHeight(38);
-            username.setPrefWidth(172);
-            username.setTextFill(Paint.valueOf("WHITE"));
-            username.setFont(Font.font(22));
-            hb.getChildren().addAll(avt,username);
-            if (true){
-                File filejoin = new File("src/client/image/btnonline.png");
-                Image imagejoin = new Image(filejoin.toURI().toString());
-                ImageView ivjoin = new ImageView(imagejoin);
-                ivjoin.setFitWidth(30);
-                ivjoin.setFitHeight(28);
-                ivjoin.setPickOnBounds(true);
-                ivjoin.setPreserveRatio(true);
-                hb.getChildren().add(ivjoin);
-            }
-            friendList.getChildren().add(hb);
-            i++;
-        }
     }
 
     public void renderMess(ResponseMess res){
@@ -258,41 +205,6 @@ public class AppViewController {
         }
 
 
-    }
-
-    public void getRooms(ActionEvent actionEvent) {
-        chatframe.setVisible(false);
-        friendList.getChildren().clear();
-        renderRoom();
-    }
-
-    public void Sendmsg() {
-        if (this.file != null){
-            try {
-                client.sendFile(new FileMess(user.getId(),roomCur,file));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            this.file = null;
-            return;
-        }
-        Message mess = new Message();
-        mess.from = user.getId();
-        mess.roomID = roomCur;
-        mess.content = msg.getText();
-        if (mess.content.equals("")) return;
-        msg.setText("");
-        try {
-            client.sendMess(new RequestSendMess(mess));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void sendMsgKeyEvent(KeyEvent event) throws IOException {
-        if(event.getCode() == KeyCode.ENTER) {
-            Sendmsg();
-        }
     }
 
     public void renderNewMess(Message mess) {
@@ -347,15 +259,54 @@ public class AppViewController {
         }
     }
 
+    public void getRooms(ActionEvent actionEvent) {
+        chatframe.setVisible(false);
+        friendList.getChildren().clear();
+        renderRoom();
+    }
+
+    public void Sendmsg() {
+        if (this.file != null){
+            try {
+                client.sendFile(new FileMess(user.getId(),roomCur,file));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            this.file = null;
+            return;
+        }
+        Message mess = new Message();
+        mess.from = user.getId();
+        mess.roomID = roomCur;
+        mess.content = msg.getText();
+        if (mess.content.equals("")) return;
+        msg.setText("");
+        try {
+            client.sendMess(new RequestSendMess(mess));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMsgKeyEvent(KeyEvent event) throws IOException {
+        if(event.getCode() == KeyCode.ENTER) {
+            Sendmsg();
+        }
+    }
+
+
+
     public void renderNewFile(FileMess fileRender) {
         if (fileRender.roomID == roomCur) {
             HBox hb = new HBox();
             hb.setLayoutY(nextPosMess);
             hb.setPrefHeight(76);
-            hb.setPrefWidth(773);
+            hb.setPrefWidth(785);
             File file = new File("src/client/image/avartar.png");
             Image image = new Image(file.toURI().toString());
             ImageView avt = new ImageView(image);
+            avt.setFitWidth(68);
+            avt.setFitHeight(63);
             Label username = new Label("User " + fileRender.from);
             username.setTextFill(Paint.valueOf("WHITE"));
             username.setFont(Font.font(22));
@@ -378,15 +329,16 @@ public class AppViewController {
                             }
                             Image image = SwingFXUtils.toFXImage(img1, null);
                             ImageView imageView = new ImageView(image);
-                            imageView.setFitHeight(1500);
-                            imageView.setFitWidth(1500);
+                            //imageView.setFitHeight(1500);
+                            //imageView.setFitWidth(1500);
                             imageView.setPreserveRatio(true);
 
                             // Create display
                             GridPane pane = new GridPane();
                             pane.getChildren().addAll(imageView);
-                            Scene picture = new Scene(pane, 1500, 800);
+                            //Scene picture = new Scene(pane, 1500, 800);
 
+                            Scene picture = new Scene(pane);
                             Stage window = new Stage();
                             window.setScene(picture);
                             window.setTitle(fileRender.fileName);
@@ -540,5 +492,55 @@ public class AppViewController {
             e.printStackTrace();
         }
         MainClient.showLoginView();
+    }
+
+    //Khong su dung//
+
+    public void getFriends(ActionEvent actionEvent) {
+        try {
+            client.requestFriends(new RequestFriend(user.getId()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void renderFriend(ResponseFriend res) {
+        friendList.getChildren().clear();
+        int i = 0;
+        for (ResponseFriend.FriendInfo fi: res.listFriend){
+            HBox hb = new HBox();
+            System.out.println(hb.getId());
+            hb.setAlignment(Pos.CENTER_LEFT);
+            hb.setLayoutX(-3);
+            hb.setLayoutY(i*68);
+            hb.setPrefHeight(66);
+            hb.setPrefWidth(270);
+            hb.getProperties().put("class","active");
+            File file = new File("src/client/image/avartar.png");
+            Image image = new Image(file.toURI().toString());
+            ImageView avt= new ImageView(image);
+            avt.setFitHeight(63);
+            avt.setFitWidth(70);
+            avt.setPickOnBounds(true);
+            avt.setPreserveRatio(true);
+            Label username = new Label(fi.username);
+            username.setPrefHeight(38);
+            username.setPrefWidth(172);
+            username.setTextFill(Paint.valueOf("WHITE"));
+            username.setFont(Font.font(22));
+            hb.getChildren().addAll(avt,username);
+            if (true){
+                File filejoin = new File("src/client/image/btnonline.png");
+                Image imagejoin = new Image(filejoin.toURI().toString());
+                ImageView ivjoin = new ImageView(imagejoin);
+                ivjoin.setFitWidth(30);
+                ivjoin.setFitHeight(28);
+                ivjoin.setPickOnBounds(true);
+                ivjoin.setPreserveRatio(true);
+                hb.getChildren().add(ivjoin);
+            }
+            friendList.getChildren().add(hb);
+            i++;
+        }
     }
 }

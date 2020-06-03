@@ -54,8 +54,8 @@ public class Server extends Thread{
     public void turnOff(ChatRoom room, ServerWorker worker) {
         for (ChatRoom chatRoom: roomList){
             if (chatRoom == room){
-//                if room.turnOff(worker) == true;  xóa room này ra khoi roomList
-//                xóa worker ra khỏi workerList
+                //if room.turnOff(worker) == true;  xóa room này ra khoi roomList
+                //xóa worker ra khỏi workerList
             }
         }
     }

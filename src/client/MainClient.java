@@ -9,6 +9,8 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -57,11 +59,15 @@ public class MainClient extends Application {
         if (res instanceof User){
             try {
                 user = (User)res;
-                System.out.println("Hello");
                 showAppView();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        if (res instanceof LoginFailed){
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setContentText("Password does not match or invalid account");
+            alert.showAndWait();
         }
         if (res instanceof ResponseFriend){
             avc.renderFriend((ResponseFriend)res);
