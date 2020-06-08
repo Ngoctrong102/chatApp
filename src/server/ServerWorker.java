@@ -254,6 +254,7 @@ public class ServerWorker extends Thread{
             }
             outputStream.writeObject(user);
         }
+
         this.conti = true;
         while (conti){
             Serializable request = (Serializable)inputStream.readObject();
@@ -342,5 +343,9 @@ public class ServerWorker extends Thread{
         } catch (SQLException | IOException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public void addRoom(ChatRoom room) {
+        listRoom.add(room);
     }
 }

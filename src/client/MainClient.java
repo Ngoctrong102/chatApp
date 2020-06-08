@@ -54,7 +54,7 @@ public class MainClient extends Application {
         showLoginView();
         primaryStage.show();
     }
-
+    // em đăng nhap thien r mk lại đi
     private static void handleRespond(Serializable res) {
         if (res instanceof User){
             try {
@@ -81,8 +81,8 @@ public class MainClient extends Application {
         if (res instanceof ResponseNewRoom){
             ResponseNewRoom newRoom = (ResponseNewRoom)res;
             user.getRooms().add(newRoom.roomInfo);
-            avc.renderRoom();
             avc.changeRoom(newRoom.roomInfo.roomID,newRoom.roomInfo.roomName);
+            avc.renderRoom();
         }
         if (res instanceof ResponseListRoom){
             avc.renderRoomToJoin((ResponseListRoom)res);

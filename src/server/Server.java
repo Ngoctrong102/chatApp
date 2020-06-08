@@ -64,6 +64,7 @@ public class Server extends Thread{
         for (ChatRoom chatRoom: roomList){
             if (chatRoom.getID() == roomID){
                 chatRoom.addUserOnl(worker);
+                worker.addRoom(chatRoom);
                 return;
             }
         }
