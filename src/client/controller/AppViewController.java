@@ -133,8 +133,10 @@ public class AppViewController {
                 File filejoin = new File("src/client/image/newmess.png");
                 Image imagejoin = new Image(filejoin.toURI().toString());
                 ImageView ivjoin = new ImageView(imagejoin);
-                ivjoin.setFitWidth(30);
-                ivjoin.setFitHeight(28);
+                //ivjoin.setFitWidth(30);
+                //ivjoin.setFitHeight(28);
+                ivjoin.setFitWidth(25);
+                ivjoin.setFitHeight(22);
                 ivjoin.setPickOnBounds(true);
                 ivjoin.setPreserveRatio(true);
                 Pane pane = new Pane();

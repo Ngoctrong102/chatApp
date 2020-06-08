@@ -17,7 +17,6 @@ public class ServerWorker extends Thread{
     private Connection connection;
     private boolean conti;
 
-
     public ServerWorker(Server server, Socket clientSocket) {
         this.server = server;
         this.clientSocket = clientSocket;
@@ -229,23 +228,6 @@ public class ServerWorker extends Thread{
         }
     }
 
-    private void returnListFriend(RequestFriend request) {
-        try {
-            PreparedStatement ps = this.connection.prepareStatement("SELECT friendIDs FROM Users WHERE id = ?");
-            ps.setString(1, String.valueOf(request.id));
-            ResultSet resultSet = ps.executeQuery();
-            if (!resultSet.next()) outputStream.writeObject(new ResponseFriend());
-            String listID = resultSet.getString("friendIDs");
-            String stm = "SELECT * FROM Users WHERE id IN ("+ listID + ")";
-            ps = this.connection.prepareStatement(stm);
-            resultSet = ps.executeQuery();
-            outputStream.writeObject(new ResponseFriend(resultSet));
-        } catch (SQLException | IOException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-
     private void handleLogin(DataLogin req) throws SQLException, IOException, ClassNotFoundException {
         PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM Users WHERE username = ?");
         ps.setString(1, req.getUsername());
@@ -330,6 +312,7 @@ public class ServerWorker extends Thread{
         outputStream.writeObject(message);
     }
 
+
     public void startRoom(int roomID) {
         ChatRoom room = new ChatRoom(roomID);
         room.addUserOnl(this);
@@ -342,6 +325,22 @@ public class ServerWorker extends Thread{
             outputStream.writeObject(request);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void returnListFriend(RequestFriend request) {
+        try {
+            PreparedStatement ps = this.connection.prepareStatement("SELECT friendIDs FROM Users WHERE id = ?");
+            ps.setString(1, String.valueOf(request.id));
+            ResultSet resultSet = ps.executeQuery();
+            if (!resultSet.next()) outputStream.writeObject(new ResponseFriend());
+            String listID = resultSet.getString("friendIDs");
+            String stm = "SELECT * FROM Users WHERE id IN ("+ listID + ")";
+            ps = this.connection.prepareStatement(stm);
+            resultSet = ps.executeQuery();
+            outputStream.writeObject(new ResponseFriend(resultSet));
+        } catch (SQLException | IOException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

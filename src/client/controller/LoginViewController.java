@@ -74,6 +74,9 @@ public class LoginViewController {
         } else {
             try {
                 client.objectOutputStream.writeObject(register);
+                Username1.setText("");
+                Password1.setText("");
+                Password2.setText("");
                 LoginPane.setVisible(true);
                 RegisterPane.setVisible(false);
             } catch (IOException e) {
@@ -93,11 +96,6 @@ public class LoginViewController {
     void backlogin(ActionEvent event) {
         LoginPane.setVisible(true);
         RegisterPane.setVisible(false);
-    }
-
-    @FXML
-    public void exitApplication(ActionEvent event) {
-        Platform.exit();
     }
 
     public void setClientSocket(ClientSocket cli) {
