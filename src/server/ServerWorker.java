@@ -126,6 +126,7 @@ public class ServerWorker extends Thread{
             throwables.printStackTrace();
         }
         server.addUserToRoom(this,roomID);
+        System.out.println(roomID);
         try {
             stm = "SELECT * FROM RoomChat WHERE id = " + roomID;
             System.out.println(stm);
@@ -133,6 +134,7 @@ public class ServerWorker extends Thread{
             ResultSet resultSet = ps.executeQuery();
             resultSet.next();
             outputStream.writeObject(new ResponseNewRoom(new RoomInfo(roomID,resultSet.getString("roomName"))));
+            updateRoomList(roomID,resultSet.getString("roomName"));
         } catch (IOException | SQLException e) {
             e.printStackTrace();
         }

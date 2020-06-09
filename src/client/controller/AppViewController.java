@@ -133,8 +133,6 @@ public class AppViewController {
                 File filejoin = new File("src/client/image/newmess.png");
                 Image imagejoin = new Image(filejoin.toURI().toString());
                 ImageView ivjoin = new ImageView(imagejoin);
-                //ivjoin.setFitWidth(30);
-                //ivjoin.setFitHeight(28);
                 ivjoin.setFitWidth(25);
                 ivjoin.setFitHeight(22);
                 ivjoin.setPickOnBounds(true);
@@ -271,6 +269,7 @@ public class AppViewController {
         if (this.file != null){
             try {
                 client.sendFile(new FileMess(user.getId(),roomCur,file));
+                msg.setText("");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -296,8 +295,7 @@ public class AppViewController {
         }
     }
 
-
-
+    
     public void renderNewFile(FileMess fileRender) {
         if (fileRender.roomID == roomCur) {
             HBox hb = new HBox();
@@ -309,7 +307,7 @@ public class AppViewController {
             ImageView avt = new ImageView(image);
             avt.setFitWidth(68);
             avt.setFitHeight(63);
-            Label username = new Label("User " + fileRender.from);
+            Label username = new Label(String.valueOf(fileRender.from));
             username.setTextFill(Paint.valueOf("WHITE"));
             username.setFont(Font.font(22));
             username.setPrefHeight(38);
@@ -412,7 +410,6 @@ public class AppViewController {
     public void createRoom() {
         client.creatRoom(new RequestCreateNewRoom(txtroomName.getText(),user.getId()));
         txtroomName.setText("");
-        System.out.println("tạo phòng mới");
     }
 
     public void createRoomKeyEvent(KeyEvent event) throws IOException {
@@ -420,7 +417,6 @@ public class AppViewController {
             createRoom();
         }
     }
-
 
     public void listRoomToJoin(ActionEvent actionEvent) {
         chatframe.setVisible(false);
@@ -476,7 +472,7 @@ public class AppViewController {
         FileChooser FC = new FileChooser();
         this.file = FC.showOpenDialog(null);
         if (this.file != null){
-            System.out.println("có file rồi");
+            msg.setText(this.file.getName());
         }
     }
 
@@ -496,8 +492,8 @@ public class AppViewController {
         MainClient.showLoginView();
     }
 
-    //Khong su dung//
 
+    //Khong su dung
     public void getFriends(ActionEvent actionEvent) {
         try {
             client.requestFriends(new RequestFriend(user.getId()));
